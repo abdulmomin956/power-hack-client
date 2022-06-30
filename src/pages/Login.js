@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import axios from '../api/axios';
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth';
 
 
 
 const Login = () => {
+    const { setAuth, persist, setPersist } = useAuth();
+    // const data = useAuth();
+    // console.log(data);
+    let navigate = useNavigate();
+    let location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -20,6 +29,7 @@ const Login = () => {
         userRef.current.focus();
     }, [])
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         // console.log(user, pass);
@@ -32,15 +42,16 @@ const Login = () => {
                     withCredentials: true,
                 }
             )
-            console.log(response);
+            // console.log(response);
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            // setAuth({ user, roles, accessToken });
+            // const roles = response?.data?.roles;
+            setAuth({ user, accessToken });
             setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this
             setUser('');
             setPass('');
+            navigate(from, { replace: true });
         }
         catch (err) {
             // console.log(err);
@@ -59,9 +70,18 @@ const Login = () => {
 
     }
 
+
     useEffect(() => {
         setErrMsg('')
     }, [pass, user])
+
+    const togglePersist = () => {
+        setPersist(prev => !prev);
+    }
+
+    useEffect(() => {
+        localStorage.setItem("persist", persist);
+    }, [persist])
 
     return (
         <>{success ? (
@@ -107,6 +127,15 @@ const Login = () => {
                     <Button variant="primary" type="submit">
                         Login
                     </Button>
+                    <div className="persistCheck">
+                        <input
+                            type="checkbox"
+                            id="persist"
+                            onChange={togglePersist}
+                            checked={persist}
+                        />
+                        <label htmlFor="persist">Trust This Device</label>
+                    </div>
                 </Form>
             </section>}
         </>
