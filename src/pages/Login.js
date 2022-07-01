@@ -93,11 +93,11 @@ const Login = () => {
             </section>
         )
             :
-            <section className='container my-5'>
+            <section style={{ maxWidth: '500px' }} className='container my-5'>
                 <header className='text-center'>
                     <h1>Please Login</h1>
                 </header>
-                <Form onSubmit={handleSubmit} className='mx-auto' style={{ width: '500px' }} >
+                <Form onSubmit={handleSubmit} className='mx-auto' style={{ maxWidth: '480px' }} >
                     {
                         errMsg && <Form.Text>
                             <h5 ref={errRef} className='text-danger'>{errMsg}</h5>
@@ -124,10 +124,7 @@ const Login = () => {
                             onChange={(e) => setPass(e.target.value)} />
 
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Login
-                    </Button>
-                    <div className="persistCheck">
+                    <Form.Group className="persistCheck mb-3">
                         <input
                             type="checkbox"
                             id="persist"
@@ -135,8 +132,13 @@ const Login = () => {
                             checked={persist}
                         />
                         <label htmlFor="persist">Trust This Device</label>
-                    </div>
+                    </Form.Group>
+                    <Button className='mb-3' variant="primary" type="submit">
+                        Login
+                    </Button>
+
                 </Form>
+                <p>Don't have an account?<Link to='/register'>Register Here</Link></p>
             </section>}
         </>
     );

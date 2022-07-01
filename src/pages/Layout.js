@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faInfoCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from "../api/axios";
+import useAuth from "../hooks/useAuth";
 
 const NAME_REGEX = /^[a-z ,.'-]+$/i;
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -184,9 +185,10 @@ function MyVerticallyCenteredModal(props) {
 
 const Layout = () => {
     const [modalShow, setModalShow] = useState(false);
+    const { auth } = useAuth();
     return (
         <main className="App container mt-4">
-            <Navbar bg="light" expand="lg">
+            <Navbar className={!auth?.accessToken ? 'd-none' : ""} bg="light" expand="lg">
                 <Container fluid>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">

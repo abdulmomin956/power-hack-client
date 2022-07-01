@@ -101,11 +101,11 @@ const Registration = () => {
             </section>
         )
             :
-            <section className='container my-5'>
+            <section style={{ maxWidth: '500px' }} className='container my-5'>
                 <header className='text-center'>
                     <h1>Create an account</h1>
                 </header>
-                <Form onSubmit={handleSubmit} className='mx-auto' style={{ width: '500px' }} >
+                <Form onSubmit={handleSubmit} className='mx-auto' style={{ maxWidth: '480px' }} >
                     {
                         errMsg && <Form.Text>
                             <h5 ref={errRef} className='text-danger'>{errMsg}</h5>
@@ -173,6 +173,7 @@ const Registration = () => {
                         Register
                     </Button>
                 </Form>
+                <p>Already have an account?<Link to='/login'>Login Here</Link></p>
             </section>}
         </>
     );
