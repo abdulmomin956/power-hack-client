@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 
 const Home = () => {
     const [show, setShow] = useState(false);
-    const allBills = useQuery('allBills', () => fetch('http://localhost:5000/api/billing-list').then(res => res.json()))
+    const allBills = useQuery('allBills', () => fetch('https://polite-whistler-22718.herokuapp.com/api/billing-list').then(res => res.json()))
 
 
     if (allBills.isLoading) {
@@ -14,7 +14,7 @@ const Home = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/api/delete-billing/${id}`, {
+        fetch(`https://polite-whistler-22718.herokuapp.com/api/delete-billing/${id}`, {
             method: "DELETE"
         }).then(res => res.json())
             .then(result => console.log(result))
